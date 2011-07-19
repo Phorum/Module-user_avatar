@@ -10,10 +10,7 @@
 
 if(!defined("PHORUM")) return;
 
-// No need to load this in 5.3.
-if (file_exists('./include/api/custom_profile_fields.php')) {
-    require_once('./include/api/custom_profile_fields.php');
-}
+require_once('./include/api/custom_profile_fields.php');
 
 // See if we already have this field configured.
 $existing = phorum_api_custom_profile_field_byname('mod_user_avatar');

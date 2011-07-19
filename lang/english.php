@@ -1,25 +1,16 @@
 <?php
 $PHORUM["DATA"]["LANG"]["mod_user_avatar"] = array(
-    "BlockAvatars" => "Do not display avatars in (other people's) postings",
+    "BlockAvatars" => "Do not display avatars in postings.",
+    "FileTypeLimits" => "Only the following file types are allowed for avatars: %file_type_list%.",
+    "FileSizeLimits" => "Please do not upload avatars larger than %filesize% and %width% x %height% pixels.",
     "AvatarLimit" => "You can store at most %max_avatars% avatars.",
     "ErrorTooManyAvatars" => "Too many avatars. Please delete one first. You are allowed to store %max_avatars% avatars at most.",
-    "ErrorUploadFailed" => "Uploading the file failed (no file selected or file too large?)",
-    "ErrorNotASupportedImageFormat" => "The uploaded file is not of a supported image file format.",
-    "ErrorProcessingImage" => "The image could not be processed",
-    "CropInfo" => "The image that you uploaded is too big to be used as an avatar. Please select the part of the image that you want to use as your avatar in the image below.",
-    "UploadHeadline" => "Add a new avatar",
-    "ConfigHeadline" => "Configuration",
-    "SelectAvatarHelp" => "What avatar do you want to use for your account?",
-    "RetrieveFromUrl" => "Load image from the following URL",
-    "ErrorUrlUploadFailed" => "The image could not be downloaded from the provided URL",
+    "ErrorNotInAllowedFileTypes" => "Your avatar is not in one of the allowed image types.",
+    "ErrorTooLargeFileSize" => "Your avatar exceeds the allowed file-size. Please scale it down.",
+    "ErrorTooLargeDimensions" => "Your avatar exceeds the allowed dimensions. Please scale it down.",
+    "UploadHeadline" => "AVATARS - Upload a new avatar",
+    "AvatarHeading" => "Manage my avatars",
     "SelectAvatar" => "Select Avatar",
-    "SelectGravatar" => "Select gravatar for %email%",
-    "SelectNone" => "Do not use an avatar",
-    "CCMenuItem" => "Avatar",
-    "CCConfigureAvatar" => "Setup avatar",
-
-    // Note to the translator: make sure this translation contains only
-    // a few short words, to make sure that this looks good in the interface.
-    "GravatarInfo" => "Visit gravatar<br/>for more info"
+    "CCMenuItem" => "Avatar"
 );
 ?>

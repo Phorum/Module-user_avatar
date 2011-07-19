@@ -28,8 +28,11 @@ if (empty($GLOBALS["PHORUM"]["mod_user_avatar"]["max_height"]))
 if (empty($GLOBALS["PHORUM"]["mod_user_avatar"]["max_width"]))
     $GLOBALS["PHORUM"]["mod_user_avatar"]["max_width"] = 100;
 
-if (!isset($GLOBALS["PHORUM"]["mod_user_avatar"]["default_avatar"]))
-    $GLOBALS["PHORUM"]["mod_user_avatar"]["default_avatar"] = '';
+if (empty($GLOBALS["PHORUM"]["mod_user_avatar"]["file_types"]))
+    $GLOBALS["PHORUM"]["mod_user_avatar"]["file_types"] = array('gif','png','jpg');
+
+if (empty($GLOBALS["PHORUM"]["mod_user_avatar"]["max_filesize"]))
+    $GLOBALS["PHORUM"]["mod_user_avatar"]["max_filesize"] = 25;
 
 if (empty($GLOBALS["PHORUM"]["mod_user_avatar"]["permission_create"]))
     $GLOBALS["PHORUM"]["mod_user_avatar"]["permission_create"] = AVATAR_PERM_ALL;
@@ -39,13 +42,4 @@ if (!isset($GLOBALS["PHORUM"]["mod_user_avatar"]["moderator_only_in_mod_forums"]
 
 if (empty($GLOBALS["PHORUM"]["mod_user_avatar"]["permission_disable"]))
     $GLOBALS["PHORUM"]["mod_user_avatar"]["permission_disable"] = AVATAR_PERM_ALL;
-
-if (!isset($GLOBALS["PHORUM"]["mod_user_avatar"]["upload_enabled"]))
-    $GLOBALS["PHORUM"]["mod_user_avatar"]["upload_enabled"] = 1;
-
-if (!isset($GLOBALS["PHORUM"]["mod_user_avatar"]["url_enabled"]))
-    $GLOBALS["PHORUM"]["mod_user_avatar"]["url_enabled"] = 1;
-
-if (!isset($GLOBALS["PHORUM"]["mod_user_avatar"]["gravatar_enabled"]))
-    $GLOBALS["PHORUM"]["mod_user_avatar"]["gravatar_enabled"] = 1;
 ?>
