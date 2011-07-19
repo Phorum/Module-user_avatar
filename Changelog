@@ -1,0 +1,245 @@
+Changelog:
+----------
+
+2011-04-01 3.1.2 Maurice Makaay
+
+    - Implemented a performance enhancement. Instead of retrieving user
+      info for message authors separately, the code that applies avatars to
+      a list of messages now bundles all involved users and retrieves
+      their info in a single request.
+
+    - Updated the "ChangesSaved" confirmation to use the "ProfileUpdatedOk"
+      message, which is used by other parts of the control center too.
+
+    - New global template variables added:
+      - {LANG->mod_user_avatar->CCConfigureAvatar}
+      - {URL->CC_AVATAR}
+
+    - The default avatar is now applied to anonymous users too.
+
+2011-01-13 3.1.1 Maurice Makaay
+
+    - The user avatar is now available for the posting editor as well
+      in the template variable {POSTING->MOD_USER_AVATAR}.
+      For most editing scenarios, the avatar of the active user 
+      {USER->MOD_USER_AVATAR} could be used. However, when editing a message 
+      as a moderator, this would not deliver the correct avatar when editing
+      another user's post.
+
+2010-10-13 3.1.0 Maurice Makaay
+
+    - Template variables were changed to get rid of some collisions
+      between configuration storage and template variables. Please check
+      the README for information about the new template variables and
+      update your existing template accordingly.
+
+    - Some language strings were added to the module. If you are using
+      a bundled language file, then please check if the translation is
+      complete. If not, then you will find some English strings in
+      lang/yourlanguage.php. If you create a translation, then please
+      post it in this module's thread at phorum.org, so we can include
+      the translation in the distribution package.
+
+    - The module now sets up avatar images for the list page as well.
+      The template variables are exactly the same as those that are
+      set up for the read page.
+
+    - Images can now be uploaded by providing the image URL. The server
+      will download the image via HTTP. The retrieved file is used for
+      setting up the avatar.
+
+    - When the image is smaller than or close to the required size for an
+      avatar, then it will be scaled to the correct size and saved.
+
+    - When the uploaded image is too big to be used as an avatar, then the
+      module will now present an image cropping and scaling interface to
+      the user, where the user can easily select a portion of the uploaded
+      image to be used as the avatar.
+
+    - Support for Gravatar was added, to make Gravatar integrate
+      seamlessly with this module.
+
+    - When no avatar is selected, but avatars are available for the user,
+      then module will now automatically select and enable the first
+      available avatar when entering the control center avatar page.
+
+    - Configuration options were added, to make it possible for the admin
+      to select any or all of the avatar methods (file upload, url upload
+      and gravatar).
+
+    - A configuration option was added to configure a default avatar image.
+      This image will be used in case the user did not setup an avatar for
+      his account.
+
+    - Because the module is by now a full rewrite of the original code by
+      Chris Eaton and CZVilda, I removed them from the author list in
+      the README.
+
+2009-05-24 3.0.5 Maurice Makaay
+
+    - Made the module compatible with API changes in Phorum 5.3.
+
+2008-11-14 3.0.4 Maurice Makaay
+
+    - Generate the avatar for the currently active user as well. The
+      avatar is available in {USER->user_avatar}.
+
+    - For all template variables, the names have changed from
+
+      {DATA->mod_user_avatar}   -> {DATA->user_avatar}
+      {DATA->mod_user_avatar_w} -> {DATA->user_avatar_w}
+      {DATA->mod_user_avatar_h} -> {DATA->user_avatar_h}
+
+      The template variables that were used up to version 3.0.3
+      have all been implemented as backward compabibility options,
+      so no changes are needed in the templates. The new
+      {USER->user_avatar} is only available under that name.
+
+2008-07-01 3.0.3 Maurice Makaay
+
+    - Fixed an undefined index warning.
+      Thanks to Oliver Riesen for noticing.
+
+2008-01-08 3.0.2 Maurice Makaay
+
+    - The image dimensions (width and height) for avatar images are
+      now stored in the user avatar data. Extra template variables
+      {OBJECT->mod_user_avatar_w} and {OBJECT->mod_user_avatar_h}
+      have been introduced to make this information available from the
+      templates. This can be used to assign a correct width and height
+      to avatar images. See the README for updated template examples.
+
+      The idea for this was provided by Phorum user "tomierna". He also
+      provided a patch, but that one had to retrieve the image data for
+      the avatars on each request to determine the filesize. Since we
+      already have the dimensions available, right after the avatar file
+      upload, I figured we could better remember that data from there
+      to make this a really lightweight option.
+
+2007-11-01 3.0.1 Maurice Makaay
+
+    - Added Russian language file.
+      Thanks to user "born2die" at phorum.org.
+
+    - Added German language files.
+      Thanks to user "Berti" at phorum.org.
+
+    - Added French language file.
+      Thanks to notre-planete.info.
+
+    - Added Turkish language file.
+      Thanks to user "scabboy" at phorum.org.
+
+    - Added Italian language file.
+      Thanks to Nicola.
+
+2007-09-14 3.0.0 Maurice Makaay
+
+    - Fixed an undefined index warning.
+
+    - First stable release for Phorum 5.2.
+
+2007-09-12 2.99.10 Maurice Makaay
+
+    - Fixed some undefined index warnings.
+      Long live Phorum Event Logging! :-)
+
+    - Fixed a problem which could show up as a broken image on the
+      user profile page.
+
+2007-09-09 2.99.9 Maurice Makaay
+
+    - Added missing language key "SelectAvatar" to the language files.
+
+    - Drastically simplified the template to not show info that is not
+      really needed for the avatar functionality.
+
+    - Added a new template var NUMBER_OF_FILES, which can be used to
+      hide the list of avatar files if none are uploaded.
+
+    - Added a new permission setting, which determines what users can
+      disable displaying of avatars.
+
+    - Added template variables for representing the avatar permissions:
+      {PERMISSION->AVATAR_CREATE} and {PERMISSION->AVATAR_DISABLE}
+
+2007-09-09 2.99.8 Maurice Makaay
+
+    - Added some permission settings to the module. It's now possible to
+      allow avatars to one of all users, moderators+admins or admins.
+      In case "moderators+admins" is chosen, it's additionally possible to
+      only have the avatar displayed in messages that are in a forum for
+      which the user really has message moderation access.
+
+2007-09-06 2.99.7 Maurice Makaay
+
+    - Added on-the-fly upgrading of avatars for older versions of this
+      module.
+
+2007-09-05 2.99.6 Maurice Makaay
+
+    - Fixed a bug in the message processing cache code.
+      Thanks to CBiLL for reporting.
+
+    - Added functionality to cleanup a user's avatar files if the
+      user is deleted.
+
+2007-09-04 2.99.5 Maurice Makaay
+
+    - Made use of a new feature in the Phorum file API, to link files
+      to a module. That way, it's no longer needed to have file
+      uploads enabled. The module now takes care of its own
+      file storage.
+
+2007-09-04 2.99.4 Maurice Makaay
+
+    - The profile hook did not check for avatar = -1.
+
+    - Did some optimizations on the code that adds avatar info to
+      the messages.
+
+    - Updated the language file. I misunderstood the disable functionality
+      for the avatars. It is not to disable your own avatar, but it is
+      to fully disable showing avatars in postings.
+
+    - settings.php now makes use of the defaults.php file to fill in
+      some default values.
+
+2007-09-03 2.99.3 Maurice Makaay
+
+    - Added a Dutch translation for the module.
+
+    - Added a require_version to the module's info.txt.
+
+    - Added a "ChangesSaved" confirmation after successfully saving
+      the user settings for the mod.
+
+    - Reformatted the language file and added a new string for
+      the menu item in the control center. Also, removed stale
+      keys from the language file.
+
+    - Changed the module to make use of a new hook (cc_panel) in the
+      core code, which takes away the need to copy files into the main
+      Phorum file tree. Additionally, moved the control panel template
+      to a module template, so that one doesn't need copying anymore
+      as well.
+
+    - Changed the menu item for the control center in a template, so
+      it can be adjusted for other templates.
+
+    - Renamed mod_user_install_common() -> mod_user_avatar_common().
+
+    - Use phorum_admin_okmsg() in the settings.php script.
+
+    - Renamed readme.txt to README for Phorum module admin interface
+      compliance.
+
+    - Formatted the README for 80 column screens and extended the
+      information in this file.
+
+    - Got rid of deprecated =& assignment for new object in settings.php.
+
+2007-09-02 2.99.2 Thomas Seifert
+
+    - Initial development release.
+

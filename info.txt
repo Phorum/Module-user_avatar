@@ -1,0 +1,20 @@
+title: User Avatar
+desc: Allows users to setup an avatar image, which can appear in their posts and profile page. Users can upload multiple avatar images in the control center or make use of an avatar image that is hosted with Gravatar.
+author: Thomas Seifert and Maurice Makaay
+url: http://www.phorum-support.de
+version: 3.1.2
+require_version: 5.3.0
+category: user_features
+
+hook: lang|
+hook: css_register|mod_user_avatar_css_register
+hook: common|mod_user_avatar_common
+hook: common_post_user|mod_user_avatar_common_post_user
+hook: read|mod_user_avatar_read
+hook: list|mod_user_avatar_list
+hook: posting_custom_action|mod_user_avatar_posting_custom_action
+hook: profile|mod_user_avatar_profile
+hook: tpl_cc_menu_options_hook|mod_user_avatar_tpl_cc_menu_options_hook
+hook: cc_panel|mod_user_avatar_cc_panel
+hook: user_delete|mod_user_avatar_user_delete
+hook: file_purge_stale|mod_user_avatar_file_purge_stale

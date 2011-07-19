@@ -1,0 +1,299 @@
+Module  : User Avatar
+Version : 3.1.2
+Authors : Maurice Makaay
+          Thomas Seifert
+
+Allows users to setup an avatar image, which can appear in their posts
+and profile page. Users can upload multiple images in the control center
+or make use of an avatar image that is hosted with the Gravatar
+service (http://www.gravatar.com). One of these images can be selected
+as the active avatar for the user.
+
+When the uploaded image is too big to be used as an avatar, then the
+module will present an image cropping and scaling interface to the user,
+where the user can easily select a portion of the uploaded image to be
+used as the avatar.
+
+For running this mod, you need Phorum 5.3.0 or later. It will not
+work for earlier versions of Phorum.
+
+Contents:
+1. Installation
+2. Main template customization (for showing the avatars)
+3. Module template customization (for the control center interface)
+4. Upgrading Jcrop
+
+
+1. Installation:
+----------------
+
+  - Unpack the archive;
+
+  - Move the directory "user_avatar" to the directory "mods"
+    within your Phorum installation;
+
+  - Login as administrator in Phorum's administrative interface and
+    go to the "Modules" section;
+
+  - Enable the module "User Avatar".
+
+  - Configure the module to your likings through the module's settings page.
+
+  - Templates must be configured to show avatars. Suggested template changes
+    are included in the "3. Template customization" section below.
+    Alter your template to suit your needs and taste.
+
+
+2. Template customization:
+--------------------------
+
+  To display the avatar on various Phorum pages, you will have to edit the
+  Phorum template files. Here is a description of the files and the
+  template variables that you can use and some some sample implementations.
+
+  * <any template>.tpl
+
+    You can use the template variable {USER->MOD_USER_AVATAR} for the
+    avatar image URL for the currently logged in Phorum user.
+    You can check that same variable, to see if the user has an avatar
+    enabled or not.
+
+    The configured height and width from the module's settings screen are
+    available in the following template variables:
+
+      {MOD_USER_AVATAR->WIDTH}: Image width in pixels
+      {MOD_USER_AVATAR->HEIGHT}: Image height in pixels
+
+    These template variables are available on any page. You can use
+    template code like below to display the active user's avatar
+    wherever you like.
+
+      {IF USER->MOD_USER_AVATAR}
+        <img src="{USER->MOD_USER_AVATAR}" alt="avatar"
+             style="width:{MOD_USER_AVATAR->WIDTH}px;
+                    height:{MOD_USER_AVATAR->HEIGHT}px"/>
+      {/IF}
+
+    Another template variable that is available for use in all pages, is
+    {URL->CC_AVATAR}. This variable contains a URL that points to the
+    avatar configuration page in the user's control center.
+
+      <a href="{URL->CC_AVATAR}">Setup your avatar</a>
+
+
+  * read.tpl (flat read mode)
+  * read_hybrid.tpl (hybrid read mode)
+
+      Inside the message loop {LOOP MESSAGES}, you can use the template
+      variable {MESSAGES->MOD_USER_AVATAR} for the avatar image URL.
+      You can check that same variable, to see if the author has an avatar
+      enabled or not.
+
+      The most basic code for showing the avatar image is:
+
+          {IF MESSAGES->MOD_USER_AVATAR}
+            <img src="{MESSAGES->MOD_USER_AVATAR}" />
+          {/IF}
+
+      In the emerald template, you could for example incorporate the code like
+      below, to make the avatar image show up to the left of the user details
+      (IP, registration, posts). The added code is shown inside the box.
+
+        ......
+        ......
+             {MESSAGES->datestamp}
+             </small>
+         </td>
+        _____________________________________________________________
+       |                                                             |
+         <td style="padding-right:10px">
+           {IF MESSAGES->MOD_USER_AVATAR}
+             <img src="{MESSAGES->MOD_USER_AVATAR}" alt="avatar"
+                  style="width:{MOD_USER_AVATAR->WIDTH}px;
+                         height:{MOD_USER_AVATAR->HEIGHT}px"
+           {/IF}
+         </td>
+       |_____________________________________________________________|
+
+         <td class="message-user-info" nowrap="nowrap">
+             {IF MESSAGES->user->admin}
+                 <strong>{LANG->Admin}</strong><br />
+        ......
+        ......
+
+
+  * read_threads.tpl (threaded read mode)
+
+      You can use the template variable {MESSAGE->MOD_USER_AVATAR} for the
+      avatar image URL for the message that is being viewed. You can check
+      that same variable, to see if the author has an avatar enabled or not.
+
+      Note: beware of the difference in the template variable, compared to the
+      other read templates above. This one uses "MESSAGE", where the ones above
+      uses "MESSAGES".
+
+      The most basic code for showing the avatar image is:
+
+          {IF MESSAGE->MOD_USER_AVATAR}
+            <img src="{MESSAGE->MOD_USER_AVATAR}" />
+          {/IF}
+
+      In the emerald template, you can use the same kind of code that was used
+      for the flat and hybrid view above, to make it show up to the left of the
+      user details (IP, registration, posts). Just make sure that you use
+      "MESSAGE" instead of "MESSAGES".
+
+
+  * profile.tpl (if you want the user's avatar to appear in the profile page)
+
+      You can use the template variable {PROFILE->MOD_USER_AVATAR} for the
+      avatar image URL for the profile that is being viewed. You can check
+      that same variable, to see if the user has an avatar enabled or not.
+
+      The most basic code for showing the avatar image on the profile page is:
+
+          {IF PROFILE->MOD_USER_AVATAR}
+            <img src="{PROFILE->MOD_USER_AVATAR}" />
+          {/IF}
+
+      In the emerald template, you could for example incorporate the code like
+      below, to make it show up in the top right corner of the profile info.
+      The added code is shown inside the box.
+
+        ......
+        ......
+        <div id="profile">
+
+            <div class="generic">
+               _________________________________________________________
+              |                                                         |
+                {IF PROFILE->MOD_USER_AVATAR}
+                  <img src="{PROFILE->MOD_USER_AVATAR}" alt="avatar"
+                       style="width:{MOD_USER_AVATAR->WIDTH}px;
+                              height:{MOD_USER_AVATAR->HEIGHT}px"
+                       align="right" />
+                {/IF}
+              |_________________________________________________________|
+
+
+                <div class="icon-user">
+        ......
+        ......
+
+  * list.tpl, list_threads.tpl
+
+      Inside the message loop {LOOP MESSAGES}, you can use the template
+      variable {MESSAGES->MOD_USER_AVATAR} for the avatar image URL.
+      You can check that same variable, to see if the author has an avatar
+      enabled or not.
+
+  * posting.tpl
+
+      You can use the template variable {POSTING->MOD_USER_AVATAR} for the
+      avatar image URL. You can check that same variable, to see if the author
+      has an avatar enabled or not.
+
+      For most editing scenarios, the avatar of the active user
+      {USER->MOD_USER_AVATAR} could be used. However, when editing a message
+      as a moderator, this would not deliver the correct avatar when editing
+      another user's post.
+
+  * cc_start.tpl
+
+      This is the "View my profile" page in the user's control center.
+      You can display the user's avatar on this page. Additionally, you
+      can make the avatar clickable, so the user can click the avatar to
+      jump to the avatar configuration page.
+
+      The most basic code for showing the avatar image on the profile page is:
+
+          {IF PROFILE->MOD_USER_AVATAR}
+            <img src="{PROFILE->MOD_USER_AVATAR}" />
+          {/IF}
+
+      In the emerald template, you could for example incorporate the code like
+      below, to make it show up in the top right corner of the profile info.
+      The added code is shown inside the box.
+
+        ......
+        ......
+        <div class="generic"> 
+         _________________________________________________________
+        |                                                         |
+          {IF PROFILE->MOD_USER_AVATAR}
+            <div style="float:right; text-align: center"> 
+              <a href="{URL->CC_AVATAR}"> 
+                <img src="{PROFILE->MOD_USER_AVATAR}" alt="avatar" 
+                     style="width:{MOD_USER_AVATAR->WIDTH}px; 
+                            height:{MOD_USER_AVATAR->HEIGHT}px; 
+                            border: {generic_border}"/> 
+                <br/> 
+                {LANG->mod_user_avatar->CCConfigureAvatar} 
+              </a> 
+            </div> 
+          {/IF}
+        |_________________________________________________________|
+
+          <dl> 
+            <dt>{LANG->Username}:</dt> 
+            <dd>{PROFILE->username}</dd> 
+        ......
+        ......
+
+    If you configure a default avatar image in the module's admin settings,
+    then the code from above will show the default image, including the
+    link to point the user to the avatar configuration page. Without the
+    default avatar, nothing will be shown (since PROFILE->MOD_USER_AVATAR
+    will not be filled).
+
+
+3. Module template customization:
+---------------------------------
+
+  By default, this module will use the template files from the directory
+  "templates/emerald" for displaying an extra menu option in the control
+  center (cc_menu_item.tpl) and for displaying the control center panel
+  where the user can manage the avatar settings (cc_panel.tpl).
+
+  If you want to modify the templates to make them work better for your
+  site's template, then do not edit the template files that were in
+  the module distribution. Instead, copy the full directory
+
+    mods/user_avatar/templates/emerald
+
+  to
+
+    mods/user_avatar/templates/yourtemplatename
+
+  (asuming that your site's template is stored as "templates/yourtemplatename")
+  and edit the files in the new directory. Phorum will automatically recognize
+  that you have created a specific template set to use for your site's active
+  template.
+
+
+4. Upgrading Jcrop
+------------------
+
+Jcrop is the library that is used for implementing the cropping interface.
+I found a bug in the library, which I fixed in this code and which has been
+reported as a bug for the Jcrop developers. When upgrading, then check if
+the bug has been fixed in the release. If not, then reapply the fix yourself
+in Jcrop/js/jquery.Jcrop.js:
+
+  function createDragger(ord)/*{{{*/
+  {
+    return function(e) {
+      if (options.disabled) return false;
+      if ((ord == 'move') && !options.allowMove) return false;
+      btndown = true;
+      docOffset = getPos($img); <<<<<<< this line was added
+      startDragMode(ord,mouseAbs(e));
+      e.stopPropagation();
+      e.preventDefault();
+      return false;
+    };
+  };
+
+For the bug report, see:
+http://code.google.com/p/jcrop/issues/detail?id=39
+
