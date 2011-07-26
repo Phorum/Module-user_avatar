@@ -1,5 +1,5 @@
 title: User Avatar
-desc: Allows users to setup an avatar image, which can appear in their posts and profile page. Users can upload multiple avatar images in the control center or make use of an avatar image that is hosted with Gravatar.
+desc: Allows users to setup an avatar image, which can appear in their posts and profile page. Users can upload multiple avatar images in the control center or make use of an avatar image that is hosted with Gravatar. One of these images can be selected as the active avatar for the user.
 author: Thomas Seifert and Maurice Makaay
 url: http://www.phorum-support.de
 version: 3.1.2

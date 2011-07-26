@@ -1,20 +1,18 @@
-Module  : User Avatar
-Version : 3.1.2
-Authors : Maurice Makaay
-          Thomas Seifert
+Module  : @TITLE@
+Version : @VERSION@
+Authors : @AUTHOR@
 
-Allows users to setup an avatar image, which can appear in their posts
-and profile page. Users can upload multiple images in the control center
-or make use of an avatar image that is hosted with the Gravatar
-service (http://www.gravatar.com). One of these images can be selected
-as the active avatar for the user.
+@DESCRIPTION@
 
 When the uploaded image is too big to be used as an avatar, then the
 module will present an image cropping and scaling interface to the user,
 where the user can easily select a portion of the uploaded image to be
 used as the avatar.
 
-For running this mod, you need Phorum 5.3.0 or later. It will not
+Information about the Gravatar service can be found at:
+http://www.gravatar.com
+
+For running this mod, you need Phorum @REQUIRED_VERSION@ or later. It will not
 work for earlier versions of Phorum.
 
 Contents:
@@ -29,13 +27,13 @@ Contents:
 
   - Unpack the archive;
 
-  - Move the directory "user_avatar" to the directory "mods"
+  - Move the directory "@MODULE_ID@" to the directory "mods"
     within your Phorum installation;
 
   - Login as administrator in Phorum's administrative interface and
     go to the "Modules" section;
 
-  - Enable the module "User Avatar".
+  - Enable the module "@TITLE@".
 
   - Configure the module to your likings through the module's settings page.
 
@@ -259,11 +257,11 @@ Contents:
   site's template, then do not edit the template files that were in
   the module distribution. Instead, copy the full directory
 
-    mods/user_avatar/templates/emerald
+    mods/@MODULE_ID@/templates/emerald
 
   to
 
-    mods/user_avatar/templates/yourtemplatename
+    mods/@MODULE_ID@/templates/yourtemplatename
 
   (asuming that your site's template is stored as "templates/yourtemplatename")
   and edit the files in the new directory. Phorum will automatically recognize
